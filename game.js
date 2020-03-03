@@ -10,18 +10,24 @@ var text;
 var winningMessage;
 var won = false;
 var currentScore = 0;
-var winningScore = 100;
+var winningScore = 10;
+
+
+
 
 // add collectable items to the game
 function addItems() {
   items = game.add.physicsGroup();
-  createItem(375, 300, 'coin');
+  createItem(300, 500, 'coin');
 }
 
 // add platforms to the game
 function addPlatforms() {
   platforms = game.add.physicsGroup();
   platforms.create(450, 150, 'platform');
+  platforms.create(200, 200, 'platform');
+  platforms.create(150, 350, 'platform');
+  platforms.create(100, 450, 'platform');
   platforms.setAll('body.immovable', true);
 }
 
@@ -35,18 +41,31 @@ function createItem(left, top, image) {
 // create the winning badge and add to screen
 function createBadge() {
   badges = game.add.physicsGroup();
-  var badge = badges.create(750, 400, 'badge');
+  var badge = badges.create(150, 150, 'badge');
   badge.animations.add('spin');
   badge.animations.play('spin', 10, true);
+
 }
 
 // when the player collects an item on the screen
 function itemHandler(player, item) {
   item.kill();
-  currentScore = currentScore + 10;
+
+  questions = ['Please answer the following question: Are you retarded?'];
+  for (var i = 0; i < questions.length; i++) {
+    let answer = prompt(questions[i]);
+    if (answer === 'Yes') {
+      currentScore = currentScore + 10;
+    } else {
+      alert('You failed bro')
+    }
+  }
+
   if (currentScore === winningScore) {
       createBadge();
+      Swal.fire('Good job!', 'Take the badge', 'success')
   }
+
 }
 
 // when the player collects the badge at the end of the game
@@ -119,11 +138,12 @@ window.onload = function () {
     if (jumpButton.isDown && (player.body.onFloor() || player.body.touching.down)) {
       player.body.velocity.y = -400;
     }
-    // when the player winw the game
+    // when the player wins the game
     if (won) {
-      winningMessage.text = "YOU WIN!!!";
+      winningMessage.text = "YOU WON!!! 😎";
     }
   }
+
 
   function render() {
 
