@@ -14,7 +14,6 @@ var winningScore = 10;
 
 
 
-
 // add collectable items to the game
 function addItems() {
   items = game.add.physicsGroup();
@@ -88,8 +87,12 @@ window.onload = function () {
     //Load spritesheets
     game.load.spritesheet('player', 'chalkers.png', 48, 62);
     game.load.spritesheet('coin', 'coin.png', 36, 44);
+    game.load.spritesheet('question', 'question.png', 36, 44);
     game.load.spritesheet('badge', 'badge.png', 42, 54);
   }
+
+  // Initial PopUp for information reasons
+  confirm('Hi 😊 Welcome to the digital world. You will be transformed into zeros and ones. Have fun!');
 
   // initial game set up
   function create() {
@@ -118,7 +121,7 @@ window.onload = function () {
     game.physics.arcade.overlap(player, badges, badgeHandler);
     player.body.velocity.x = 0;
 
-    // is the left cursor key presssed?
+    // is the left cursor key pressed?
     if (cursors.left.isDown) {
       player.animations.play('walk', 10, true);
       player.body.velocity.x = -300;
